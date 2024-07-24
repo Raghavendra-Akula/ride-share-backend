@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { verifyRegister } = require("../middlewares/auth-middleware");
+const { verifyRegister, verifyJWT } = require("../middlewares/auth-middleware");
 const { registerHandler, emailVerifyHandler, loginHandler } = require("../controllers/auth-controller");
 
 const authRouter = express.Router();
@@ -13,5 +13,8 @@ authRouter.route("/verify/:userId/:token")
 
 authRouter.route("/login")
     .post(loginHandler);
+
+authRouter.route("/")
+    .get([verifyJWT]);
 
 module.exports = authRouter;

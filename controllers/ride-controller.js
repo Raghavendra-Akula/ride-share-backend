@@ -283,4 +283,24 @@ const getFilteredRides = async (req, res) => {
     }
 };
 
-module.exports = { addRideDetails, updateRideDetails, getAllRides, getMyRides, getStarredRides, updateStar, getFilteredRides };
+const deleteRideById = async (req, res) => {
+    try {
+        const rideId = req.params.id;
+        const ride = await Ride.findById(rideId);
+        if (!ride) return res.status(200).send({ message: 'Ride already deleted.'} );
+
+        await Ride.findByIdAndDelete(rideId);
+
+        await User.updateMany(
+            {},
+            { $pull: { rides: rideId, starredRides: rideId } }
+        );
+
+        res.status(200).send({ message: 'Ride deleted successfully.' });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({ message: 'Internal server error.' });
+    }
+}
+
+module.exports = { addRideDetails, updateRideDetails, getAllRides, getMyRides, getStarredRides, updateStar, getFilteredRides, deleteRideById };
