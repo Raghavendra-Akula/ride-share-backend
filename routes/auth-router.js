@@ -15,6 +15,8 @@ authRouter.route("/login")
     .post(loginHandler);
 
 authRouter.route("/")
-    .get([verifyJWT]);
+    .get([verifyJWT], async (req, res)=>{
+        return res.send({ message: "Authenticated." })
+    });
 
 module.exports = authRouter;
