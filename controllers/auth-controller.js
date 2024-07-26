@@ -20,7 +20,7 @@ const registerHandler = async (req, res)=>{
             html: `
             <p>Hello,</p>
             <p>Please verify your account by clicking the link:</p>
-            <p><a href="http://localhost:8000/api/v1/auth/verify/${userId}/${jwtToken}">Verify Account</a></p>
+            <p><a href="https://ride-share-api.onrender.com/api/v1/auth/verify/${userId}/${jwtToken}">Verify Account</a></p>
         `});
 
         res.status(200).send({ message: "Verification email sent. Please check your inbox." });
